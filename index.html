@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小学 3-6 年级纪录片推荐</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17212b;
+      --muted: #667085;
+      --line: #d7dee8;
+      --paper: #f7f9fc;
+      --panel: #ffffff;
+      --green: #20765b;
+      --blue: #246b9f;
+      --gold: #a86d12;
+      --coral: #b64d3c;
+      --shadow: 0 18px 50px rgba(32, 48, 71, .12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .hero {
+      min-height: 480px;
+      display: grid;
+      align-items: end;
+      background:
+        linear-gradient(90deg, rgba(12, 28, 37, .86), rgba(12, 28, 37, .54) 52%, rgba(12, 28, 37, .18)),
+        url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1800&q=80") center / cover;
+      color: #fff;
+    }
+
+    .hero-inner,
+    .toolbar,
+    .catalog,
+    .note-band,
+    footer {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero-inner {
+      padding: 74px 0 44px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.38);
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      font-size: 14px;
+    }
+
+    h1 {
+      max-width: 860px;
+      margin: 0;
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 1.04;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: rgba(255,255,255,.88);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .toolbar-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(247, 249, 252, .92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(240px, 1fr) auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 0;
+    }
+
+    .search {
+      min-width: 0;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .segmented {
+      display: flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .segmented button {
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .segmented button.active {
+      background: #203047;
+      color: #fff;
+    }
+
+    .catalog {
+      padding: 34px 0 26px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 100%;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 12px 28px rgba(32, 48, 71, .08);
+    }
+
+    .thumb {
+      aspect-ratio: 16 / 9;
+      background: #dbe6ef center / cover;
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: #edf2f7;
+      color: #344054;
+      font-size: 12px;
+    }
+
+    .tag.level {
+      background: #e8f3ef;
+      color: var(--green);
+    }
+
+    .tag.time {
+      background: #fff3df;
+      color: var(--gold);
+    }
+
+    .content h3 {
+      margin: 0 0 9px;
+      font-size: 21px;
+      line-height: 1.25;
+    }
+
+    .summary {
+      margin: 0 0 14px;
+      color: #475467;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .reasons {
+      display: grid;
+      gap: 9px;
+      margin: 0 0 16px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .reasons li {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      color: #344054;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .label {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .watch {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .watch small {
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .watch a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 13px;
+      border-radius: 6px;
+      background: #203047;
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .note-band {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      padding: 6px 0 44px;
+    }
+
+    .note {
+      min-height: 130px;
+      padding: 18px;
+      border-left: 4px solid var(--green);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .note:nth-child(2) {
+      border-left-color: var(--blue);
+    }
+
+    .note:nth-child(3) {
+      border-left-color: var(--coral);
+    }
+
+    .note h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .note p {
+      margin: 0;
+      color: #475467;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 24px 0 34px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .empty {
+      display: none;
+      padding: 34px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 1000px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .segmented {
+        overflow-x: auto;
+      }
+
+      .grid,
+      .note-band {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        min-height: 440px;
+      }
+
+      .hero-inner {
+        padding-top: 52px;
+      }
+
+      .lead {
+        font-size: 16px;
+      }
+
+      .grid,
+      .note-band {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .count {
+        display: block;
+        margin-top: 8px;
+      }
+
+      .watch {
+        grid-template-columns: 1fr;
+      }
+
+      .watch a {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">小学 3-6 年级 · 课堂与家庭共用</div>
+      <h1>纪录片推荐库</h1>
+      <p class="lead">面向小学中高年级筛选自然、科学、历史、地理与文化主题纪录片。每部都配有内容亮点、拍摄亮点、吸引孩子的亮点，并提供可进入观看或检索的官方链接。</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="toolbar-wrap">
+      <div class="toolbar" aria-label="筛选纪录片">
+        <input class="search" id="search" type="search" placeholder="搜索片名、主题或关键词">
+        <div class="segmented" id="gradeFilters" aria-label="按年级筛选">
+          <button class="active" data-filter="all">全部年级</button>
+          <button data-filter="3-4">3-4 年级</button>
+          <button data-filter="5-6">5-6 年级</button>
+        </div>
+        <div class="segmented" id="topicFilters" aria-label="按主题筛选">
+          <button class="active" data-filter="all">全部主题</button>
+          <button data-filter="自然">自然</button>
+          <button data-filter="科学">科学</button>
+          <button data-filter="历史">历史</button>
+          <button data-filter="地理">地理</button>
+          <button data-filter="文化">文化</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="catalog" aria-live="polite">
+      <div class="section-head">
+        <h2>推荐清单</h2>
+        <span class="count" id="resultCount">12 部纪录片</span>
+      </div>
+      <div class="grid" id="cards"></div>
+      <div class="empty" id="empty">没有匹配结果，可以放宽年级或主题筛选。</div>
+    </section>
+
+    <section class="note-band" aria-label="使用建议">
+      <article class="note">
+        <h2>课堂使用</h2>
+        <p>建议每次只选 8-15 分钟片段，先给学生一个观察任务，例如“记录三个镜头告诉你的信息”。</p>
+      </article>
+      <article class="note">
+        <h2>家庭观看</h2>
+        <p>优先选择单集短、画面清晰、旁白节奏慢的内容。自然类片源如有捕食或灾害画面，成人先预览更稳妥。</p>
+      </article>
+      <article class="note">
+        <h2>链接说明</h2>
+        <p>页面优先放官方节目页、平台页或官方教育资源入口；不同地区和账号权限可能影响播放。</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    更新日期：2026 年 6 月 17 日。推荐面向小学 3-6 年级的一般学习场景，具体观看前建议教师按班级认知水平和课程目标再次预览。
+  </footer>
+
+  <script>
+    const documentaries = [
+      {
+        title: "如果国宝会说话",
+        grade: "3-6",
+        topics: ["历史", "文化"],
+        length: "每集约 5 分钟",
+        image: "https://images.unsplash.com/photo-1564419320461-6870880221ad?auto=format&fit=crop&w=900&q=80",
+        summary: "用短小精炼的叙事讲述中国文物背后的历史、审美和生活想象，适合语文、历史启蒙与博物馆课程导入。",
+        content: "一件文物切入一个时代，信息密度适中，便于学生建立“物证看历史”的意识。",
+        filming: "镜头语言细腻，特写、光影和配乐共同突出文物质感，能示范如何观察细节。",
+        child: "单集很短，文物会被讲成有性格的“主角”，孩子不容易失去注意力。",
+        link: "https://jishi.cctv.com/special/gbspeak/index.shtml",
+        linkNote: "央视纪录专题页"
+      },
+      {
+        title: "跟着书本去旅行",
+        grade: "3-6",
+        topics: ["文化", "地理", "历史"],
+        length: "每集约 20 分钟",
+        image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=80",
+        summary: "把课本中的诗文、人物和地名带到真实地点中讲解，特别适合语文课前拓展和研学活动准备。",
+        content: "课内文本与真实场景相连，能帮助学生理解古诗文、地域文化和历史背景。",
+        filming: "大量实地拍摄与主持人行走讲述结合，让抽象课文变成可看的空间。",
+        child: "孩子会有“书里写的地方原来长这样”的发现感，容易产生继续查资料的兴趣。",
+        link: "https://tv.cctv.com/lm/gzsbqlxg/index.shtml",
+        linkNote: "央视栏目页"
+      },
+      {
+        title: "航拍中国",
+        grade: "3-6",
+        topics: ["地理", "自然"],
+        length: "每集约 50 分钟",
+        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+        summary: "从空中视角展示中国不同省份的地貌、城市、河流与人文景观，适合地理、中国区域认知和美育。",
+        content: "省域地理、人地关系、自然景观与城市发展都有覆盖，适合作为地图学习的视觉补充。",
+        filming: "航拍镜头带来宏观尺度，能帮助学生理解山脉、河流、城市布局之间的关系。",
+        child: "大场景很有冲击力，孩子容易把地图上的名称和真实画面对应起来。",
+        link: "https://tv.cctv.com/lm/hpzg/index.shtml",
+        linkNote: "央视栏目页"
+      },
+      {
+        title: "河西走廊",
+        grade: "5-6",
+        topics: ["历史", "地理", "文化"],
+        length: "每集约 50 分钟",
+        image: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=900&q=80",
+        summary: "以河西走廊为线索讲述丝绸之路、民族交流、军事与文化传播，适合高年级历史地理综合学习。",
+        content: "把地理通道与历史事件连接起来，能帮助学生理解“为什么这条路重要”。",
+        filming: "景观空镜、情景再现和音乐辨识度高，叙事有史诗感。",
+        child: "道路、关隘、商旅、敦煌等元素天然具有冒险感，适合激发探究问题。",
+        link: "https://jishi.cctv.com/special/djsb/hxzl/index.shtml",
+        linkNote: "央视纪录专题页"
+      },
+      {
+        title: "蓝色星球 II",
+        grade: "3-6",
+        topics: ["自然", "科学"],
+        length: "每集约 50 分钟",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+        summary: "BBC 经典海洋自然纪录片，展示深海、珊瑚礁、极地海洋与海洋生物行为，可用于生命科学和环保主题。",
+        content: "海洋生态系统、动物行为和环境变化线索清晰，适合做观察记录和因果讨论。",
+        filming: "水下摄影、微距和长时间等待拍摄极具代表性，能说明科学影像如何取得。",
+        child: "奇特海洋生物和深海场景有强烈新鲜感，容易引发“它为什么这样生活”的问题。",
+        link: "https://www.bbcearth.com/shows/blue-planet-ii",
+        linkNote: "BBC Earth 官方页"
+      },
+      {
+        title: "地球脉动 II",
+        grade: "3-6",
+        topics: ["自然", "科学"],
+        length: "每集约 50 分钟",
+        image: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=900&q=80",
+        summary: "按照岛屿、山脉、丛林、沙漠、草原、城市等环境展开，帮助学生理解栖息地与生命适应。",
+        content: "非常适合“环境如何影响动物行为”的科学探究，主题结构清楚。",
+        filming: "高速摄影、远距离追踪和稳定运动镜头丰富，拍摄张力强。",
+        child: "动物故事像短篇冒险，节奏快，画面震撼，能牢牢抓住注意力。",
+        link: "https://www.bbcearth.com/shows/planet-earth-ii",
+        linkNote: "BBC Earth 官方页"
+      },
+      {
+        title: "美丽中国 Wild China",
+        grade: "3-6",
+        topics: ["自然", "地理", "文化"],
+        length: "每集约 50 分钟",
+        image: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=900&q=80",
+        summary: "聚焦中国自然环境与人类生活方式，从雨林、喀斯特、青藏高原到海岸生态，适合跨学科学习。",
+        content: "把中国地貌、生物多样性和地方生活联系在一起，能服务地理、科学与文化主题。",
+        filming: "自然摄影与人文观察并重，既有宏观景观，也有生活细节。",
+        child: "熟悉的“中国”被拍出陌生的新鲜感，适合引导学生重新观察家乡与国家。",
+        link: "https://www.bbc.co.uk/programmes/b00bybpj",
+        linkNote: "BBC 节目页"
+      },
+      {
+        title: "我们的星球 Our Planet",
+        grade: "5-6",
+        topics: ["自然", "科学"],
+        length: "每集约 50 分钟",
+        image: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80",
+        summary: "以生态系统为主线展示地球生命，同时强调气候变化和人类活动影响，适合环保主题项目学习。",
+        content: "自然奇观与生态危机并置，能引导高年级学生讨论证据、责任和行动。",
+        filming: "大规模自然摄影和叙事剪辑成熟，画面有电影感。",
+        child: "壮观场景容易吸引学生，但部分画面较沉重，建议教师提前选择片段。",
+        link: "https://www.youtube.com/playlist?list=PLvahqwMqN4M0GRkZY8WkLZMb6Z-W7qbLA",
+        linkNote: "官方 YouTube 教育播放列表"
+      },
+      {
+        title: "NOVA",
+        grade: "5-6",
+        topics: ["科学"],
+        length: "多为 50-60 分钟",
+        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80",
+        summary: "PBS 长寿科学纪录片栏目，覆盖太空、工程、生命科学、考古和技术议题，适合科学拓展课。",
+        content: "主题广，适合教师按单元挑选，例如宇宙、机器人、古生物、人体与工程。",
+        filming: "采访、实验演示、动画解释和实地调查结合，能展示科学问题如何被研究。",
+        child: "问题驱动明显，适合让学生边看边写“我还想知道什么”。",
+        link: "https://www.pbs.org/wgbh/nova/",
+        linkNote: "PBS NOVA 官方页"
+      },
+      {
+        title: "PBS Nature",
+        grade: "3-6",
+        topics: ["自然", "科学"],
+        length: "多为 50 分钟",
+        image: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=80",
+        summary: "PBS 自然纪录片栏目，动物行为、生态保护和人与自然关系题材丰富，适合生命科学课程补充。",
+        content: "很多单集聚焦一种动物或一个生态区域，便于围绕一个问题展开观察。",
+        filming: "自然跟拍和科学家访谈结合，既有故事性也有知识支撑。",
+        child: "动物主角明确，容易让学生产生情感连接，再进入科学解释。",
+        link: "https://www.pbs.org/wnet/nature/",
+        linkNote: "PBS Nature 官方页"
+      },
+      {
+        title: "NASA Space Place 视频资源",
+        grade: "3-6",
+        topics: ["科学"],
+        length: "短视频与专题资源",
+        image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=80",
+        summary: "NASA 面向儿童的太空与地球科学资源，适合补充天文、天气、行星和科学技术主题。",
+        content: "内容面向儿童，概念拆解更友好，适合小学科学课前导入。",
+        filming: "多用动画、任务素材和 NASA 图像资料，能展示真实科学机构的资料来源。",
+        child: "太空主题天然有吸引力，短资源适合碎片化课堂活动。",
+        link: "https://spaceplace.nasa.gov/menu/videos/",
+        linkNote: "NASA 官方儿童视频页"
+      },
+      {
+        title: "国家地理 Kids 视频",
+        grade: "3-6",
+        topics: ["自然", "科学", "地理"],
+        length: "短视频为主",
+        image: "https://images.unsplash.com/photo-1521651201144-634f700b36ef?auto=format&fit=crop&w=900&q=80",
+        summary: "国家地理面向儿童的动物、地理与科学短视频资源，适合做晨间观看、英语融合或主题导入。",
+        content: "短内容适合围绕一个动物、地点或科学事实快速建立兴趣。",
+        filming: "真实影像素材清晰，配合儿童化剪辑和解说。",
+        child: "节奏轻快，主题直观，适合注意力跨度较短的班级活动。",
+        link: "https://kids.nationalgeographic.com/videos",
+        linkNote: "National Geographic Kids 官方页"
+      }
+    ];
+
+    const cards = document.querySelector("#cards");
+    const search = document.querySelector("#search");
+    const resultCount = document.querySelector("#resultCount");
+    const empty = document.querySelector("#empty");
+    let gradeFilter = "all";
+    let topicFilter = "all";
+
+    function gradeMatches(item) {
+      if (gradeFilter === "all") return true;
+      if (gradeFilter === "3-4") return item.grade.includes("3") || item.grade.includes("4");
+      if (gradeFilter === "5-6") return item.grade.includes("5") || item.grade.includes("6");
+      return true;
+    }
+
+    function render() {
+      const query = search.value.trim().toLowerCase();
+      const filtered = documentaries.filter(item => {
+        const haystack = [
+          item.title,
+          item.grade,
+          item.topics.join(" "),
+          item.summary,
+          item.content,
+          item.filming,
+          item.child
+        ].join(" ").toLowerCase();
+        const topicMatches = topicFilter === "all" || item.topics.includes(topicFilter);
+        return gradeMatches(item) && topicMatches && haystack.includes(query);
+      });
+
+      cards.innerHTML = filtered.map(item => `
+        <article class="card" data-title="${item.title}">
+          <div class="thumb" style="background-image:url('${item.image}')"></div>
+          <div class="content">
+            <div class="meta">
+              <span class="tag level">${item.grade} 年级</span>
+              ${item.topics.map(topic => `<span class="tag">${topic}</span>`).join("")}
+              <span class="tag time">${item.length}</span>
+            </div>
+            <h3>${item.title}</h3>
+            <p class="summary">${item.summary}</p>
+            <ul class="reasons">
+              <li><span class="label">内容亮点</span><span>${item.content}</span></li>
+              <li><span class="label">拍摄亮点</span><span>${item.filming}</span></li>
+              <li><span class="label">孩子亮点</span><span>${item.child}</span></li>
+            </ul>
+            <div class="watch">
+              <small>${item.linkNote}</small>
+              <a href="${item.link}" target="_blank" rel="noopener">打开观看</a>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      resultCount.textContent = `${filtered.length} 部纪录片`;
+      empty.style.display = filtered.length ? "none" : "block";
+    }
+
+    function bindSegmented(group, setter) {
+      document.querySelector(group).addEventListener("click", event => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        [...button.parentElement.children].forEach(child => child.classList.remove("active"));
+        button.classList.add("active");
+        setter(button.dataset.filter);
+        render();
+      });
+    }
+
+    bindSegmented("#gradeFilters", value => gradeFilter = value);
+    bindSegmented("#topicFilters", value => topicFilter = value);
+    search.addEventListener("input", render);
+    render();
+  </script>
+</body>
+</html>
